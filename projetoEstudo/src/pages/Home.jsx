@@ -1,18 +1,17 @@
+import ProductCard from "../components/ProductCard";
+import products from "../data/products";
+
 function Home() {
     return ( 
         <div>
-            <h1>Bem-vinda à nossa loja de blusas femininas</h1>
+            <h1>Bem-vinda à nossa loja</h1>
 
-            <p>Aqui você encontr peças modernas, confortáveis e perfeitas para o seu estilo.</p>
+            <p>Confira nossas blusas disponíveis:</p>
 
             <section>
-                <h2>Destaques</h2>
-
-                <ul>
-                    <li>Blusas de verão</li>
-                    <li>Blusas casuais</li>
-                    <li>Moda feminina 2026</li>
-                </ul>
+                {products.map((product) => (
+                    <ProductCard key={product.id} product={product}/>
+                ))}
             </section>
         </div>
      );
