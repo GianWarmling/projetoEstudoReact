@@ -13,6 +13,9 @@ function Navbar() {
                 <li>
                     <Link to="/contato">Contato</Link>
                 </li>
+                <li>
+                    <Link to="/create">Cadastrar Produto</Link>
+                </li>
             </ul>
         </nav>
      );

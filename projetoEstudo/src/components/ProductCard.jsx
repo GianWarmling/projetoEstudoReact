@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function ProductCard({ product }) {
+function ProductCard({ product, onDelete }) {
     return ( 
         <div>
             <h3>{product.name}</h3>
@@ -12,6 +12,12 @@ function ProductCard({ product }) {
             <Link to={`/produto/${product.id}`}>
                 <button>Ver produto</button>
             </Link>
+
+            <Link to={`/editar/${product.id}`}>
+                <button>Editar</button>
+            </Link>
+
+            <button onClick={() => onDelete(product.id)}>Excluir</button>
         </div>
      );
 }
