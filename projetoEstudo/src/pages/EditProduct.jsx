@@ -7,6 +7,7 @@ function EditProduct() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
+    const [imageUrl, setImageUrl] = useState("")
 
     const [loading, setLoading] = useState(true)
 
@@ -17,6 +18,7 @@ function EditProduct() {
                 setName(data.name)
                 setDescription(data.description)
                 setPrice(data.price)
+                setImageUrl(data.imageUrl)
 
                 setLoading(false)
             })
@@ -35,7 +37,8 @@ function EditProduct() {
             id: Number(id),
             name,
             description,
-            price: parseFloat(price)
+            price: parseFloat(price),
+            imageUrl
         }
 
         try {
@@ -81,6 +84,11 @@ function EditProduct() {
                 <div>
                     <label>Preço:</label>
                     <input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} required />
+                </div>
+
+                <div>
+                    <label>Imagem URL:</label>
+                    <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required />
                 </div>
 
                 <button type="submit">Atualizar Produto</button>

@@ -30,8 +30,16 @@ function ProductDetails() {
 
     return ( 
         <div>
+            <img src={`/src/assets/${product.imageUrl}`} alt={product.name} style={{
+                width: "300px",
+                height: "350px",
+                objectFit: "cover"
+            }} />
+
             <h1>{product.name}</h1>
+
             <p>{product.description}</p>
+
             <strong>R$ {product.price}</strong>
         </div>
      );
