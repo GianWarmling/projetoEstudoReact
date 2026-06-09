@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getProductById } from "../services/productService";
 
 function ProductDetails() {
     const {id} = useParams()
@@ -7,15 +8,15 @@ function ProductDetails() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch(`https://localhost:7111/api/products/${id}`)
-        .then((res) => res.json())
+        getProductById(id)
         .then((data) => {
             setProduct(data)
-            setLoading(false)
         })
-        .catch((err) => {
-            console.error(err)
+        .catch((error) => {
+            console.error(error)
             alert("Erro ao buscar produto!")
+        })
+        .finally(() => {
             setLoading(false)
         })
     }, [id])

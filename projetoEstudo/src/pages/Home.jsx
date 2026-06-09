@@ -1,48 +1,46 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { getProducts, deleteProduct } from "../services/productService";
 
 function Home() {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch("https://localhost:7111/api/products")
-            .then(res => res.json())
+        getProducts()
             .then((data) => {
                 setProducts(data)
             })
-            .catch(err => console.error("Erro: ", err))
+            .catch(error => {
+                console.error(error)
+            })
             .finally(() => {
                 setLoading(false)
             })
     }, []);
 
-    const handleDelete = async(id) => {
+    const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Tem certeza que deseja excluir este produto?")
-        
-        if(!confirmDelete) {
+
+        if (!confirmDelete) {
             return
         }
         try {
-            const response = await fetch(`https://localhost:7111/api/products/${id}`,
-                {
-                    method: "DELETE"
-                }
-            )
-            if(!response.ok) {
-                throw new Error("Erro ao excluir produto!")
-            }
-
-            setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id))
-
+            await deleteProduct(id)
+            setProducts((prevProducts) =>
+                prevProducts.filter(
+                    (product) => product.id !== id
+                )
+            );
             alert("Produto excluído com sucesso!")
-        } catch(error) {
-            console.error(error)
+        }
+        catch (error) {
+            console.error(error);
             alert("Erro ao excluir produto!")
         }
-    }
-    
-    if(loading) {
+    };
+
+    if (loading) {
         return <p>Carregando produtos...</p>
     }
 
