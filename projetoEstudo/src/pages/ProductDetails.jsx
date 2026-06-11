@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../services/productService";
+import { CartContext } from "../context/CartContext";
 
 function ProductDetails() {
     const {id} = useParams()
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const {cartItems, addToCart} = useContext(CartContext)
+    console.log(cartItems)
+
+    const handleAddToCart = () => {
+        addToCart(product)
+        alert("Produto adicionado ao carrinho!")
+    }
 
     useEffect(() => {
         getProductById(id)
@@ -42,6 +51,8 @@ function ProductDetails() {
             <p>{product.description}</p>
 
             <strong>R$ {product.price}</strong>
+
+            <button onClick={handleAddToCart}>Adicionar ao Carrinho</button>
         </div>
      );
 }
