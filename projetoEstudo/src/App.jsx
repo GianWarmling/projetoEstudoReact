@@ -7,6 +7,7 @@ import Contato from "./pages/Contato"
 import CreateProduct from "./pages/CreateProduct"
 import EditProduct from "./pages/EditProduct"
 import ProductDetails from "./pages/ProductDetails"
+import Cart from "./pages/Cart"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/create" element={<CreateProduct />}/>
           <Route path="/editar/:id" element={<EditProduct />}/>
           <Route path="/produto/:id" element={<ProductDetails />}/>
+          <Route path="/carrinho" element={<Cart />}/>
         </Routes>
       </main>
       <Footer />

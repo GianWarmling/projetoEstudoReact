@@ -16,6 +16,9 @@ function Navbar() {
                 <li>
                     <Link to="/create">Cadastrar Produto</Link>
                 </li>
+                <li>
+                    <Link to="/carrinho">Carrinho</Link>
+                </li>
             </ul>
         </nav>
      );
