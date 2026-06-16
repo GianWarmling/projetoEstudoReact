@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import CartContext from "../context/CartContext";
 
 function Navbar() {
+    const {cartItems} = useContext(CartContext)
+    const totalItems = cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)
+
     return ( 
         <nav>
             <ul>
@@ -17,7 +22,7 @@ function Navbar() {
                     <Link to="/create">Cadastrar Produto</Link>
                 </li>
                 <li>
-                    <Link to="/carrinho">Carrinho</Link>
+                    <Link to="/carrinho">Carrinho ({totalItems})</Link>
                 </li>
             </ul>
         </nav>
