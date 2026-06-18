@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
+import { Link } from "react-router-dom";
+import { createOrder } from "../services/orderService";
 
 function Checkout() {
     const [name, setName] = useState("")
@@ -11,12 +13,13 @@ function Checkout() {
         cartItems,
         increaseQuantity,
         decreaseQuantity,
-        removeFromCart
+        removeFromCart,
+        clearCart
     } = useContext(CartContext)
 
     const total = cartItems.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (!name.trim()) {
@@ -40,13 +43,28 @@ function Checkout() {
             return
         }
 
-        console.log({
-            name,
-            email,
-            phone,
-            address
-        })
-        alert("Pedido enviado!")
+        const order = {
+            customerName: name,
+            customerEmail: email,
+            customerPhone: phone,
+            address,
+            total,
+            items: cartItems.map((item) => ({
+                productId: item.id,
+                quantity: item.quantity,
+                unitPrice: item.price
+            }))
+        }
+        try {
+            const createdOrder = await createOrder(order)
+            console.log(createdOrder)
+            clearCart()
+            alert(`Pedido #${createdOrder.id} realizado com sucesso!`)
+        }
+        catch(error) {
+            console.error(error)
+            alert("Erro ao enviar pedido!")
+        }        
     }
 
     return (
@@ -70,11 +88,13 @@ function Checkout() {
                             <td>{item.name}</td>
 
                             <td>
-                                <button onClick={() => decreaseQuantity(item.id)}>
+                                <button type="button" onClick={() => decreaseQuantity(item.id)}>
                                     -
                                 </button>
-                                {item.quantity}
-                                <button onClick={() => increaseQuantity(item.id)}>
+                                <span>
+                                    {item.quantity}
+                                </span>
+                                <button type="button" onClick={() => increaseQuantity(item.id)}>
                                     +
                                 </button>
                             </td>
@@ -87,18 +107,29 @@ function Checkout() {
                                 R$ {(item.price * item.quantity).toFixed(2)}
                             </td>
                             <td>
-                                <button onClick={() => removeFromCart(item.id)}>
+                                <button type="button" onClick={() => removeFromCart(item.id)}>
                                     Remover
                                 </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colSpan={3}>
+                            <strong>Total Geral</strong>
+                        </td>
+                        <td>
+                            <strong>R$ {total.toFixed(2)}</strong>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
 
-            <h3>
-                Total R$ {total.toFixed(2)}
-            </h3>
+            <div>
+                <Link to="/carrinho">Voltar ao Carrinho</Link>
+            </div>
 
             <form onSubmit={handleSubmit}>
                 <div>
