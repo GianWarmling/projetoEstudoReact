@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../services/orderService";
 
 function Checkout() {
@@ -8,6 +8,7 @@ function Checkout() {
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
+    const navigate = useNavigate()
 
     const {
         cartItems,
@@ -57,9 +58,12 @@ function Checkout() {
         }
         try {
             const createdOrder = await createOrder(order)
-            console.log(createdOrder)
             clearCart()
-            alert(`Pedido #${createdOrder.id} realizado com sucesso!`)
+            navigate("/pedido-sucesso", {
+                state: {
+                    orderId: createdOrder.id
+                }
+            })
         }
         catch(error) {
             console.error(error)

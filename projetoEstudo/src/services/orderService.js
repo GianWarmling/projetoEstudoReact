@@ -13,3 +13,12 @@ export async function createOrder(order) {
     }
     return await response.json()
 }
+
+export async function getOrders() {
+    const response = await fetch("https://localhost:7111/api/Orders")
+
+    if(!response.ok) {
+        throw new Error("Erro ao buscar pedidos!")
+    }
+    return await response.json()
+}

@@ -24,6 +24,9 @@ function Navbar() {
                 <li>
                     <Link to="/carrinho">Carrinho ({totalItems})</Link>
                 </li>
+                <li>
+                    <Link to="/pedidos">Pedidos</Link>
+                </li>
             </ul>
         </nav>
      );
