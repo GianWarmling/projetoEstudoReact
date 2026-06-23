@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getOrders } from "../services/orderService";
 
 function Orders() {
@@ -49,6 +50,7 @@ function Orders() {
                                 </li>
                             ))}
                         </ul>
+                        <Link to={`/pedidos/${order.id}`}>Ver Detalhes</Link>
                     </div>
                 ))
             )}

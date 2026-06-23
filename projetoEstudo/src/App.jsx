@@ -11,6 +11,7 @@ import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
 import OrderSucess from "./pages/OrderSucess"
 import Orders from "./pages/Orders"
+import OrderDetails from "./pages/OrderDetails"
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />}/>
           <Route path="/pedido-sucesso" element={<OrderSucess />}/>
           <Route path="/pedidos" element={<Orders />}/>
+          <Route path="/pedidos/:id" element={<OrderDetails />}/>
+          
         </Routes>
       </main>
       <Footer />

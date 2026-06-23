@@ -22,3 +22,13 @@ export async function getOrders() {
     }
     return await response.json()
 }
+
+export async function getOrderById(id) {
+    const response = await fetch(
+        `https://localhost:7111/api/Orders/${id}`
+    )
+    if(!response.ok) {
+        throw new Error("Erro ao buscar pedido!")
+    }
+    return await response.json()
+}
