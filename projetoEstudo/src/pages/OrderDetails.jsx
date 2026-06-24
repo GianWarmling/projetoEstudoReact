@@ -5,6 +5,7 @@ import { getOrderById } from "../services/orderService";
 function OrderDetails() {
     const { id } = useParams()
     const [order, setOrder] = useState(null)
+    console.log(order)
 
     useEffect(() => {
         getOrderById(id)
@@ -29,8 +30,12 @@ function OrderDetails() {
                 padding: "20px",
                 marginBottom: "20px"
             }}>
-                <h1>Pedido #{id}</h1>
+                <h1>Pedido #{order.id}</h1>
 
+                <p>
+                    <strong>Data:</strong>{" "}
+                    {new Date(order.createAt).toLocaleString("pt-BR")}
+                </p>
                 <p>
                     <strong>Cliente:</strong> {order.customerName}
                 </p>
@@ -49,7 +54,7 @@ function OrderDetails() {
             </div>
             <div>
                 <h2>Itens do Pedido</h2>
-                
+
                 {order.items.map((item) => (
                     <div key={item.id} style={{
                         border: "1px solid #ddd",
@@ -57,8 +62,13 @@ function OrderDetails() {
                         padding: "20px",
                         marginBottom: "20px"
                     }}>
+                        <img
+                            src={`/src/assets/${item.product.imageUrl}`}
+                            alt={item.product.name}
+                            width="120"
+                        />
                         <p>
-                            <strong>Produto ID:</strong> {item.productId}
+                            <strong>Produto:</strong> {item.product?.name}
                         </p>
                         <p>
                             <strong>Quantidade:</strong> {item.quantity}
