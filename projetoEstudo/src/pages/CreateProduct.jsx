@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuthHeaders } from "../services/productService";
 
 function CreateProduct() {
     const [name, setName] = useState("");
@@ -22,9 +23,7 @@ function CreateProduct() {
         try {
             const response = await fetch("https://localhost:7111/api/products", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: getAuthHeaders(),
                 body: JSON.stringify(product)
             })
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAuthHeaders } from "../services/productService";
 
 function EditProduct() {
     const { id } = useParams()
@@ -44,9 +45,7 @@ function EditProduct() {
         try {
             const response = await fetch(`https://localhost:7111/api/products/${id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: getAuthHeaders(),
                 body: JSON.stringify(updateProduct)
             }
             )
